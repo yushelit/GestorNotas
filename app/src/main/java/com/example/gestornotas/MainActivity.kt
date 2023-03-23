@@ -2,10 +2,47 @@ package com.example.gestornotas
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import com.example.Modelo.Usuario
+import com.example.gestornotas.Api.ServiceBuilder
+import com.example.gestornotas.Api.UserAPI
+import com.example.gestornotas.databinding.ActivityMainBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener {
+            if (binding.editTextTextPersonName.text.trim().isNotEmpty() && binding.editTextPassword.text.trim().isNotEmpty()){
+                getBuscarUnUsuario(binding.editTextTextPersonName.text.toString(), binding.editTextPassword.text.toString())
+            }else{
+                Toast.makeText(this@MainActivity, "Campos Vacios", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getBuscarUnUsuario(name: String, pwd: String) {
+        val request = ServiceBuilder.buildService(UserAPI::class.java)
+        val call = request.getLogin(name, pwd)
+        call.enqueue(object : Callback<Usuario>{
+            override fun onResponse(call: Call<Usuario>, response: Response<Usuario>){
+                val post = response.body()
+                if (post != null){
+                    Toast.makeText(this@MainActivity, "Bienvenido ${post.nombre}", Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(this@MainActivity, "Login no encontrado", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+            override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
