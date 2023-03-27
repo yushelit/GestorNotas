@@ -1,5 +1,6 @@
 package com.example.gestornotas
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this@MainActivity, "Campos Vacios", Toast.LENGTH_SHORT).show()
             }
+        }
+        binding.btnRegistrar.setOnClickListener {
+            startActivity(Intent(this@MainActivity, RegistroActivity::class.java))
         }
     }
 
