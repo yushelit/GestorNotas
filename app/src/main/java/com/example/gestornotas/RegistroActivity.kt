@@ -20,8 +20,8 @@ class RegistroActivity : AppCompatActivity() {
         binding = ActivityRegistroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolBarRegistro.title = "    Registrar"
-        binding.toolBarRegistro.setLogo(R.drawable.bloc_de_notas)
+        binding.toolBarRegistro.title = "Registrar"
+//        binding.toolBarRegistro.setLogo(R.drawable.bloc_de_notas)
 
         setSupportActionBar(binding.toolBarRegistro)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -35,6 +35,9 @@ class RegistroActivity : AppCompatActivity() {
                 Toast.makeText(this, "Faltan campos por rellenar", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.toolBarRegistro.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     private fun agregarUsuario(u: Usuario) {
@@ -44,6 +47,8 @@ class RegistroActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (!response.isSuccessful) {
                     Toast.makeText(this@RegistroActivity, "Algo ha fallado en la inserción: clave duplicada", Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(this@RegistroActivity, "Bienvenido, ${binding.editTextNombre.text}", Toast.LENGTH_LONG).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

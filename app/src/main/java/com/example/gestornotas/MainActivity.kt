@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            if (binding.editTextTextPersonName.text.trim().isNotEmpty() && binding.editTextPassword.text.trim().isNotEmpty()){
-                getBuscarUnUsuario(binding.editTextTextPersonName.text.toString(), binding.editTextPassword.text.toString())
+            if (binding.textName.text.trim().isNotEmpty() && binding.textPassword.text.trim().isNotEmpty()){
+                getBuscarUnUsuario(binding.textName.text.toString(), binding.textPassword.text.toString())
             }else{
                 Toast.makeText(this@MainActivity, "Campos Vacios", Toast.LENGTH_SHORT).show()
             }

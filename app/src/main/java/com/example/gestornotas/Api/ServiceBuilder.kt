@@ -10,7 +10,7 @@ object ServiceBuilder {
     val client = OkHttpClient.Builder().build()
 
     val url = "http://192.168.1.111:8080"
-//    val url = "http://192.168.209.103:8080"
+//    val url = "192.168.209.71:8080"
 
 
     private val retrofit = Retrofit.Builder()
