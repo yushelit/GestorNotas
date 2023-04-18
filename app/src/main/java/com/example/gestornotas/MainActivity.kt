@@ -14,14 +14,15 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val intento = Intent(this, NotasActivity::class.java)
         binding.btnLogin.setOnClickListener {
             if (binding.textName.text.trim().isNotEmpty() && binding.textPassword.text.trim().isNotEmpty()){
-                getBuscarUnUsuario(binding.textName.text.toString(), binding.textPassword.text.toString())
+                getBuscarUnUsuario(binding.textName.text.toString(), binding.textPassword.text.toString(),intento)
             }else{
                 Toast.makeText(this@MainActivity, "Campos Vacios", Toast.LENGTH_SHORT).show()
             }
@@ -31,14 +32,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getBuscarUnUsuario(name: String, pwd: String) {
+    private fun getBuscarUnUsuario(name: String, pwd: String, intento: Intent) {
         val request = ServiceBuilder.buildService(UserAPI::class.java)
         val call = request.getLogin(name, pwd)
         call.enqueue(object : Callback<Usuario>{
             override fun onResponse(call: Call<Usuario>, response: Response<Usuario>){
                 val post = response.body()
                 if (post != null){
+                    val user = Usuario(post.id,post.nombre,post.password)
+                    intento.putExtra("us", user)
                     Toast.makeText(this@MainActivity, "Bienvenido ${post.nombre}", Toast.LENGTH_SHORT).show()
+                    startActivity(intento)
                 }else {
                     Toast.makeText(this@MainActivity, "Login no encontrado", Toast.LENGTH_SHORT).show()
                 }

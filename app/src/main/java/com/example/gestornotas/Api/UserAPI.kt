@@ -22,4 +22,7 @@ interface UserAPI {
     @Headers("Content-Type:application/json")
     @POST("usuarios")
     fun addUsuario(@Body info: Usuario) : Call<ResponseBody>
+
+    //Notas
+
 }
