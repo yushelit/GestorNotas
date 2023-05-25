@@ -1,4 +1,4 @@
-package Adaptadores
+package adaptadores
 
 
 import android.annotation.SuppressLint
@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestornotas.R
 import com.notes.Modelo.Nota
+
 
 class NotasAdaptadorRecycler(var  context: Context, var notas : ArrayList<Nota>) : RecyclerView.Adapter<NotasAdaptadorRecycler.ViewHolder>() {
 
@@ -39,8 +40,8 @@ class NotasAdaptadorRecycler(var  context: Context, var notas : ArrayList<Nota>)
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         fun bind(note: Nota, context: Context, pos: Int, miAdaptadorRecycler: NotasAdaptadorRecycler) {
-            titulo.text = note.titulo
-            fecha.text = note.fecha
+           titulo.text = note.titulo
+           fecha.text = note.fecha
 
             if (pos == seleccionado) {
                 with(titulo) {
