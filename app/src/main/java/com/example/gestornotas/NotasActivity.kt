@@ -26,6 +26,13 @@ class NotasActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         obtencionNotas()
+
+        binding.materialToolbar.title = "Notas"
+        setSupportActionBar(binding.materialToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.materialToolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     private fun obtencionNotas() {
