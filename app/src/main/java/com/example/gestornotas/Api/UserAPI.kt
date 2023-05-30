@@ -3,6 +3,7 @@ package com.example.gestornotas.Api
 
 
 import com.example.Modelo.*
+import com.notes.Modelo.Nota
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -24,5 +25,6 @@ interface UserAPI {
     fun addUsuario(@Body info: Usuario) : Call<ResponseBody>
 
     //Notas
-
+    @GET("notes/{id}")
+    fun getNotas(@Path("id") id:Int): Call<MutableList<Nota>>
 }
