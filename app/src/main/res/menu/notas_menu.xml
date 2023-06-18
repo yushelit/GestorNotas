@@ -8,7 +8,4 @@
     <item
         android:id="@+id/editarPerfil"
         android:title="Editar Perfil" />
-    <item
-        android:id="@+id/salir"
-        android:title="Salir" />
 </menu>

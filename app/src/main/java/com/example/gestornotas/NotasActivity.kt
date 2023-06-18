@@ -1,9 +1,11 @@
 package com.example.gestornotas
 
 import adaptadores.NotasAdaptadorRecycler
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +19,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class NotasActivity : AppCompatActivity() {
+
     var bloc: ArrayList<Nota> = ArrayList()
     lateinit var binding: ActivityNotasBinding
     lateinit var notasRecyclerView : RecyclerView
+    val crearNormalNota = Intent(this, CrearNormalNota::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotasBinding.inflate(layoutInflater)
@@ -39,6 +44,7 @@ class NotasActivity : AppCompatActivity() {
         val user = intent.getSerializableExtra("us") as Usuario
         val request = ServiceBuilder.buildService(UserAPI::class.java)
         val call = request.getNotas(user.id)
+
         call.enqueue(object : Callback<MutableList<Nota>> {
             override fun onResponse(call: Call<MutableList<Nota>>, response: Response<MutableList<Nota>>
             ) {
@@ -60,5 +66,17 @@ class NotasActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.notas_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.newNota -> empezarActivity()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun empezarActivity() {
+        val user = intent.getSerializableExtra("us") as Usuario
+        crearNormalNota.putExtra("id", user.id)
+        startActivity(crearNormalNota)
     }
 }
