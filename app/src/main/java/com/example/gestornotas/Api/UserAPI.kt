@@ -52,4 +52,13 @@ interface UserAPI {
 //    Obtencion del cuerpo de notas normales
     @GET("normalNotes/cuerpo/{id}")
     fun getCuerpo(@Path("id") id:Int): Call<NormalNota>
+
+    //Modificacion de datos
+    @Headers("Content-Type:application/json")
+    @PUT("notes/{id}")
+    fun modInfo(@Body info: Nota, @Path("id") id:Int) : Call<ResponseBody>
+
+    @Headers("Content-Type:application/json")
+    @PUT("normalNotes/cuerpo/{id}")
+    fun modNormalNota(@Body info: NormalNota, @Path("id") id:Int) : Call<ResponseBody>
 }
