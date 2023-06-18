@@ -61,4 +61,8 @@ interface UserAPI {
     @Headers("Content-Type:application/json")
     @PUT("normalNotes/cuerpo/{id}")
     fun modNormalNota(@Body info: NormalNota, @Path("id") id:Int) : Call<ResponseBody>
+
+    //Notas
+    @GET("listas/{id}")
+    fun getElementos(@Path("id") id:Int): Call<MutableList<ListaNota>>
 }

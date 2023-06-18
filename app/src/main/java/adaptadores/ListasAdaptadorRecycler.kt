@@ -41,12 +41,15 @@ class ListasAdaptadorRecycler(var  context: Context, var listas : ArrayList<List
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
         fun bind(noteList: ListaNota, context: Context, pos: Int, miAdaptadorRecycler: ListasAdaptadorRecycler) {
            elemento.text = noteList.elemento
+            val urli = "@drawable/check"
+            val imageResource: Int = context.resources.getIdentifier(urli, null, context.packageName)
+            val res: Drawable = context.resources.getDrawable(imageResource)
+            foto.setImageDrawable(res)
+
             if(noteList.completado){
-                val urli = "@drawable/check"
-                val imageResource: Int = context.resources.getIdentifier(urli, null, context.packageName)
-                var res: Drawable = context.resources.getDrawable(imageResource)
-                foto.setImageDrawable(res)
                 foto.visibility = View.VISIBLE
+            }else{
+                foto.visibility = View.INVISIBLE
             }
 
             if (pos == seleccionado) {

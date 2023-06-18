@@ -1,12 +1,14 @@
 package com.example.gestornotas
 
 import adaptadores.NotasAdaptadorRecycler
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Modelo.Usuario
@@ -23,6 +25,11 @@ class NotasActivity : AppCompatActivity() {
     var bloc: ArrayList<Nota> = ArrayList()
     lateinit var binding: ActivityNotasBinding
     lateinit var notasRecyclerView : RecyclerView
+    lateinit var notaAdapter: NotasAdaptadorRecycler
+    companion object {
+        private const val REQUEST_RECARGAR = 1
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotasBinding.inflate(layoutInflater)
@@ -50,7 +57,7 @@ class NotasActivity : AppCompatActivity() {
                     notasRecyclerView = binding.recyclerView
                     notasRecyclerView.setHasFixedSize(true)
                     notasRecyclerView.layoutManager = LinearLayoutManager(this@NotasActivity)
-                    val notaAdapter = NotasAdaptadorRecycler(this@NotasActivity, bloc)
+                    notaAdapter = NotasAdaptadorRecycler(this@NotasActivity, bloc)
                     notasRecyclerView.adapter = notaAdapter
                 }
             }
@@ -77,9 +84,18 @@ class NotasActivity : AppCompatActivity() {
     private fun editarNota() {
         if(NotasAdaptadorRecycler.seleccionado >= 0){
             val note = bloc[NotasAdaptadorRecycler.seleccionado]
-            val editarNormalNota = Intent(this, EditarNotasNormales::class.java)
-            editarNormalNota.putExtra("note", note)
-            startActivity(editarNormalNota)
+            if(note.tipo == 0){
+                val editarNormalNota = Intent(this, EditarNotasNormales::class.java)
+                editarNormalNota.putExtra("note", note)
+//                startActivity(editarNormalNota)
+                startActivityForResult(editarNormalNota, REQUEST_RECARGAR)
+            }else{
+                val listaNota = Intent(this, ListasActivity::class.java)
+                listaNota.putExtra("note", note)
+//                startActivity(listaNota)
+                startActivityForResult(listaNota, REQUEST_RECARGAR)
+            }
+
         }else{
             Toast.makeText(this@NotasActivity, "Selecciona una nota para editarla.",Toast.LENGTH_LONG).show()
         }
@@ -101,16 +117,26 @@ class NotasActivity : AppCompatActivity() {
                     Toast.makeText(this@NotasActivity, "Algo ha fallado en la conexión.",Toast.LENGTH_LONG).show()
                 }
             })
+            ActivityCompat.recreate(this)
         }else{
             Toast.makeText(this@NotasActivity, "Selecciona una nota para poder borrarla.",Toast.LENGTH_LONG).show()
         }
+
     }
 
     private fun crearNotaNormal() {
         val crearNormalNota = Intent(this, CrearNormalNota::class.java)
         val user = intent.getSerializableExtra("us") as Usuario
         crearNormalNota.putExtra("id", user.id)
-        startActivity(crearNormalNota)
+//        startActivity(crearNormalNota)
+        startActivityForResult(crearNormalNota, REQUEST_RECARGAR)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_RECARGAR && resultCode == Activity.RESULT_OK) {
+            obtencionNotas()
+        }
     }
 
     private fun editarPerfil() {

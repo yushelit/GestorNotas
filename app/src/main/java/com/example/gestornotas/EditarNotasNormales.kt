@@ -66,6 +66,7 @@ class EditarNotasNormales : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@EditarNotasNormales, "Nota modificada con éxito", Toast.LENGTH_LONG).show()
+                    setResult(RESULT_OK)
                     finish()
                 }
             }

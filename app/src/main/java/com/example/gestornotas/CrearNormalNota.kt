@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.Modelo.NormalNota
 import com.example.gestornotas.Api.*
 import com.example.gestornotas.databinding.ActivityCrearNormalNotaBinding
@@ -54,7 +55,9 @@ class CrearNormalNota : AppCompatActivity() {
                     Toast.makeText(this@CrearNormalNota, "Algo ha fallado en la inserción del cuerpo", Toast.LENGTH_LONG).show()
                 }else{
                     Toast.makeText(this@CrearNormalNota, "Nota agregada satisfactoriamente", Toast.LENGTH_LONG).show()
+                    setResult(RESULT_OK)
                     finish()
+
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

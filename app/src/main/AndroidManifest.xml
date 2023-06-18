@@ -15,6 +15,9 @@
         android:theme="@style/Theme.GestorNotas"
         tools:targetApi="31">
         <activity
+            android:name=".ListasActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditarNotasNormales"
             android:exported="false" />
         <activity
