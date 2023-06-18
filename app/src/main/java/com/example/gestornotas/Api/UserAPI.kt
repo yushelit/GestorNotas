@@ -48,4 +48,8 @@ interface UserAPI {
     //Borrar notas normales de la base de datos
     @DELETE("normalNotes/{id}")
     fun delNormalNotes(@Path("id") id:Int) : Call<ResponseBody>
+
+//    Obtencion del cuerpo de notas normales
+    @GET("normalNotes/cuerpo/{id}")
+    fun getCuerpo(@Path("id") id:Int): Call<NormalNota>
 }

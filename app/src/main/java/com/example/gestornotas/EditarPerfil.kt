@@ -18,6 +18,13 @@ class EditarPerfil : AppCompatActivity() {
         binding = ActivityEditarPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.materialToolbarPerfil.title = "Editar Perfil"
+        setSupportActionBar(binding.materialToolbarPerfil)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.materialToolbarPerfil.setNavigationOnClickListener {
+            finish()
+        }
+
         binding.btnAceptar.setOnClickListener {
             val user = intent.getSerializableExtra("us") as Usuario
             if(binding.etNombre.text.isNotEmpty() && binding.etPassword.text.isNotEmpty()){

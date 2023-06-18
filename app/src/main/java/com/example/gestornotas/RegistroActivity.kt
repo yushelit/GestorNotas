@@ -20,11 +20,12 @@ class RegistroActivity : AppCompatActivity() {
         binding = ActivityRegistroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolBarRegistro.title = "Registrar"
-//        binding.toolBarRegistro.setLogo(R.drawable.bloc_de_notas)
-
+        binding.toolBarRegistro.title = "Registro"
         setSupportActionBar(binding.toolBarRegistro)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.toolBarRegistro.setNavigationOnClickListener {
+            finish()
+        }
 
         binding.btnConfirmar.setOnClickListener {
             if(binding.editTextNombre.text.isNotEmpty() && binding.editTextPasswordReg.text.isNotEmpty()){

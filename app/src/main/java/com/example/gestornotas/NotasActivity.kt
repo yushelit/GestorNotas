@@ -68,9 +68,21 @@ class NotasActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.newNota -> crearNotaNormal()
             R.id.editarPerfil -> editarPerfil()
+            R.id.editarNota -> editarNota()
             R.id.borrarNota -> borrarNota()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun editarNota() {
+        if(NotasAdaptadorRecycler.seleccionado >= 0){
+            val note = bloc[NotasAdaptadorRecycler.seleccionado]
+            val editarNormalNota = Intent(this, EditarNotasNormales::class.java)
+            editarNormalNota.putExtra("note", note)
+            startActivity(editarNormalNota)
+        }else{
+            Toast.makeText(this@NotasActivity, "Selecciona una nota para editarla.",Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun borrarNota() {
@@ -89,6 +101,8 @@ class NotasActivity : AppCompatActivity() {
                     Toast.makeText(this@NotasActivity, "Algo ha fallado en la conexión.",Toast.LENGTH_LONG).show()
                 }
             })
+        }else{
+            Toast.makeText(this@NotasActivity, "Selecciona una nota para poder borrarla.",Toast.LENGTH_LONG).show()
         }
     }
 
