@@ -44,4 +44,8 @@ interface UserAPI {
     @Headers("Content-Type:application/json")
     @POST("normalNotes")
     fun agregarNotasNormales(@Body info: NormalNota): Call<ResponseBody>
+
+    //Borrar notas normales de la base de datos
+    @DELETE("notes/{id}")
+    fun delNormalNotes(@Path("id") id:Int) : Call<ResponseBody>
 }

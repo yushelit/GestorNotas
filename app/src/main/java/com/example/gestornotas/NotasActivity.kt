@@ -66,16 +66,27 @@ class NotasActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.newNota -> crearNotaNormal()
-//            R.id.editarPerfil -> editarPerfil()
+            R.id.editarPerfil -> editarPerfil()
 //            R.id.borrarNota -> borrarNota()
         }
         return super.onOptionsItemSelected(item)
     }
+//
+//    private fun borrarNota() {
+//        TODO("Not yet implemented")
+//    }
 
     private fun crearNotaNormal() {
         val crearNormalNota = Intent(this, CrearNormalNota::class.java)
         val user = intent.getSerializableExtra("us") as Usuario
         crearNormalNota.putExtra("id", user.id)
         startActivity(crearNormalNota)
+    }
+
+    private fun editarPerfil() {
+        val user = intent.getSerializableExtra("us") as Usuario
+        val editorPerfil = Intent(this, EditarPerfil::class.java)
+        editorPerfil.putExtra("us", user)
+        startActivity(editorPerfil)
     }
 }
