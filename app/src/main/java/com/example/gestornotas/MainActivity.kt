@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
         val intento = Intent(this, NotasActivity::class.java)
         binding.btnLogin.setOnClickListener {
             if (binding.textName.text.trim().isNotEmpty() && binding.textPassword.text.trim().isNotEmpty()){
-                getBuscarUnUsuario(binding.textName.text.toString(), binding.textPassword.text.toString(),intento)
+                val user = Usuario(0,binding.textName.text.toString(), binding.textPassword.text.toString())
+                getBuscarUnUsuario(user, intento)
             }else{
                 Toast.makeText(this@MainActivity, "Campos Vacios", Toast.LENGTH_SHORT).show()
             }
@@ -32,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getBuscarUnUsuario(name: String, pwd: String, intento: Intent) {
+    private fun getBuscarUnUsuario(user:Usuario, intento: Intent) {
         val request = ServiceBuilder.buildService(UserAPI::class.java)
-        val call = request.getLogin(name, pwd)
+        val call = request.getLogin(user)
         call.enqueue(object : Callback<Usuario>{
             override fun onResponse(call: Call<Usuario>, response: Response<Usuario>){
                 val post = response.body()

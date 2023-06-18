@@ -1,9 +1,11 @@
 package com.example.gestornotas
 
 import adaptadores.NotasAdaptadorRecycler
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,5 +62,20 @@ class NotasActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.notas_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.newNota -> crearNotaNormal()
+//            R.id.editarPerfil -> editarPerfil()
+//            R.id.borrarNota -> borrarNota()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun crearNotaNormal() {
+        val crearNormalNota = Intent(this, CrearNormalNota::class.java)
+        val user = intent.getSerializableExtra("us") as Usuario
+        crearNormalNota.putExtra("id", user.id)
+        startActivity(crearNormalNota)
     }
 }
