@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/newNota"
-        android:title="Agregar Nota" />
-    <item
         android:id="@+id/editarPerfil"
         android:title="Editar Perfil" />
     <item
-        android:id="@+id/salir"
-        android:title="Salir" />
+        android:id="@+id/newNota"
+        android:title="Agregar Nota" />
+    <item
+        android:id="@+id/borrarNota"
+        android:title="Borrar Nota" />
 </menu>
