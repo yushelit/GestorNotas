@@ -14,6 +14,7 @@ import com.example.gestornotas.Api.*
 
 import com.example.gestornotas.databinding.ActivityNotasBinding
 import com.notes.Modelo.Nota
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,14 +68,29 @@ class NotasActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.newNota -> crearNotaNormal()
             R.id.editarPerfil -> editarPerfil()
-//            R.id.borrarNota -> borrarNota()
+            R.id.borrarNota -> borrarNota()
         }
         return super.onOptionsItemSelected(item)
     }
-//
-//    private fun borrarNota() {
-//        TODO("Not yet implemented")
-//    }
+
+    private fun borrarNota() {
+        if(NotasAdaptadorRecycler.seleccionado >= 0){
+            val note = bloc[NotasAdaptadorRecycler.seleccionado]
+
+            val request = ServiceBuilder.buildService(UserAPI::class.java)
+            val call = request.delNormalNotes(note.id)
+            call.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@NotasActivity, "Registro eliminado con éxito",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Toast.makeText(this@NotasActivity, "Algo ha fallado en la conexión.",Toast.LENGTH_LONG).show()
+                }
+            })
+        }
+    }
 
     private fun crearNotaNormal() {
         val crearNormalNota = Intent(this, CrearNormalNota::class.java)

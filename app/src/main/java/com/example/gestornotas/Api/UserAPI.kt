@@ -46,6 +46,6 @@ interface UserAPI {
     fun agregarNotasNormales(@Body info: NormalNota): Call<ResponseBody>
 
     //Borrar notas normales de la base de datos
-    @DELETE("notes/{id}")
+    @DELETE("normalNotes/{id}")
     fun delNormalNotes(@Path("id") id:Int) : Call<ResponseBody>
 }

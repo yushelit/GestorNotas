@@ -9,6 +9,9 @@
         android:id="@+id/newNota"
         android:title="Agregar Nota" />
     <item
+        android:id="@+id/editarNota"
+        android:title="Editar Nota" />
+    <item
         android:id="@+id/borrarNota"
         android:title="Borrar Nota" />
 </menu>
