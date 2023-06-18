@@ -16,11 +16,11 @@
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tituloNota"
+            app:layout_constraintStart_toEndOf="@+id/elementoLista"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tituloNota"
+            android:id="@+id/elementoLista"
             android:layout_width="281dp"
             android:layout_height="32dp"
             android:text="TextView"

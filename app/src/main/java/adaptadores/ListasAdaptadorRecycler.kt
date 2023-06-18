@@ -3,22 +3,24 @@ package adaptadores
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.Modelo.ListaNota
 import com.example.gestornotas.R
-import com.notes.Modelo.Nota
 
 
-class NotasAdaptadorRecycler(var  context: Context, var notas : ArrayList<Nota>) : RecyclerView.Adapter<NotasAdaptadorRecycler.ViewHolder>() {
+class ListasAdaptadorRecycler(var  context: Context, var listas : ArrayList<ListaNota>) : RecyclerView.Adapter<ListasAdaptadorRecycler.ViewHolder>() {
 
     companion object {
         var seleccionado:Int = -1
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = notas[position]
+        val item = listas[position]
 
         holder.bind(item, context, position, this)
     }
@@ -29,24 +31,30 @@ class NotasAdaptadorRecycler(var  context: Context, var notas : ArrayList<Nota>)
     }
 
     override fun getItemCount(): Int {
-        return notas.size
+        return listas.size
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titulo = view.findViewById(R.id.elementoLista) as TextView
-        val fecha = view.findViewById(R.id.fechaNota) as TextView
+        val elemento = view.findViewById(R.id.elementoLista) as TextView
+        val foto = view.findViewById(R.id.imageViewCheck) as ImageView
 
         @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
-        fun bind(note: Nota, context: Context, pos: Int, miAdaptadorRecycler: NotasAdaptadorRecycler) {
-           titulo.text = note.titulo
-           fecha.text = note.fecha
+        fun bind(noteList: ListaNota, context: Context, pos: Int, miAdaptadorRecycler: ListasAdaptadorRecycler) {
+           elemento.text = noteList.elemento
+            if(noteList.completado){
+                val urli = "@drawable/check"
+                val imageResource: Int = context.resources.getIdentifier(urli, null, context.packageName)
+                var res: Drawable = context.resources.getDrawable(imageResource)
+                foto.setImageDrawable(res)
+                foto.visibility = View.VISIBLE
+            }
 
             if (pos == seleccionado) {
-                with(titulo) {
-                    this.setTextColor(resources.getColor(R.color.red))
+                with(elemento) {
+                    this.setTextColor(resources.getColor(R.color.blue))
                 }
             }else {
-                with(titulo) {
+                with(elemento) {
                     this.setTextColor(resources.getColor(R.color.white))
                 }
             }
